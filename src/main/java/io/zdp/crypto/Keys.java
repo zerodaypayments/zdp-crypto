@@ -174,4 +174,19 @@ public class Keys {
 
 	}
 
+	public static BigInteger toBigIntegerFromPrivateKeyBase58(String v) {
+		
+		try {
+			
+			byte[] decoded = Base58.decode(v);
+			
+			return new BigInteger(decoded);
+			
+		} catch (Exception e) {
+			log.error("Error: ", e);
+		}
+		return null;
+
+	}
+
 }

@@ -20,16 +20,23 @@ public class Signing {
 	 * Sign a UTF-8 string by using a provided private key
 	 */
 	public static byte[] sign(PrivateKey pvt, String data) throws Exception {
+		return sign(pvt, data.getBytes(StandardCharsets.UTF_8));
+	}
+	
+	/**
+	 * Sign a UTF-8 string by using a provided private key
+	 */
+	public static byte[] sign(PrivateKey pvt, byte[] data) throws Exception {
 
 		Signature sign = Signature.getInstance(SHA256WITH_ECDSA, BouncyCastleProvider.PROVIDER_NAME);
 
 		sign.initSign(pvt);
 
-		sign.update(data.getBytes(StandardCharsets.UTF_8));
+		sign.update(data);
 
 		return sign.sign();
 
-	}
+	}	
 	
 	/**
 	 * Check is a Digital signature is valid by using provided RS public key

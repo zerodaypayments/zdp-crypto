@@ -6,6 +6,7 @@ import java.security.NoSuchProviderException;
 import java.security.Security;
 
 import org.apache.commons.codec.binary.StringUtils;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,6 +51,13 @@ public class Hashing {
 			log.error("Error: ", e);
 		}
 		return null;
+	}
+
+	public static byte[] hashTransactionSignature(String signature) {
+		byte[] data = StringUtils.getBytesUtf8(signature);
+		data = whirlpool(data);
+		data = DigestUtils.sha256(data);
+		return data;
 	}
 
 }
