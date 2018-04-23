@@ -158,6 +158,10 @@ public class Keys {
 
 	}
 
+	public static String toZDPPrivateKey(BigInteger privKey) {
+		return Base58.encode(privKey.toByteArray());
+	}
+
 	public static String toZDPPublicKey(BigInteger privKey, String curve) {
 
 		byte[] pubKey = Keys.getPublicKeyFromPrivate(privKey, curve);
