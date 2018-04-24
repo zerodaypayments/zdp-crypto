@@ -1,11 +1,9 @@
 package io.zdp.crypto;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 public class Crypto {
 
 	public static boolean isValidAccount(String addr) {
-		return addr != null && addr.startsWith("zdp") && addr.length() > 10 && NumberUtils.isCreatable(addr.substring(3, 6));
+		return addr != null && addr.startsWith(Keys.ZDP00) && addr.length() > 30 && addr.length() < 40;
 	}
 
 }

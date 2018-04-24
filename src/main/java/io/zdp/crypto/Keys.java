@@ -28,6 +28,8 @@ import org.slf4j.LoggerFactory;
 
 public class Keys {
 
+	public static final String ZDP00 = "zdp00";
+
 	private static final Logger log = LoggerFactory.getLogger(Keys.class);
 
 	private static final String EC = "EC";
@@ -170,18 +172,18 @@ public class Keys {
 
 		String key = Base58.encode(pub);
 
-		return "zdp" + Curves.getCurveIndexAsReadable(curve) + key;
+		return ZDP00 + key;
 
 	}
 
 	public static BigInteger toBigIntegerFromPrivateKeyBase58(String v) {
-		
+
 		try {
-			
+
 			byte[] decoded = Base58.decode(v);
-			
+
 			return new BigInteger(decoded);
-			
+
 		} catch (Exception e) {
 			log.error("Error: ", e);
 		}
