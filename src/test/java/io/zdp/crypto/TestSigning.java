@@ -5,6 +5,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.bouncycastle.util.encoders.Hex;
 
 import junit.framework.TestCase;
 
@@ -24,13 +25,20 @@ public class TestSigning extends TestCase {
 
 			PrivateKey pvt = Keys.getPrivateKeyFromECBigIntAndCurve(privateKey, curve);
 
-			byte[] sign = Signing.sign(pvt, text);
+			System.out.println("Sign: " + text);
+			
+			for (int i = 0; i < 10; i++) {
 
-			PublicKey pubKey = Keys.toPublicKey(pubKeyBytes, curve);
+				byte[] sign = Signing.sign(pvt, text);
+				
+				System.out.println(Hex.toHexString(sign));
 
-			boolean validSignature = Signing.isValidSignature(pubKey, text, sign);
+				PublicKey pubKey = Keys.toPublicKey(pubKeyBytes, curve);
 
-			assertTrue(validSignature);
+				boolean validSignature = Signing.isValidSignature(pubKey, text, sign);
+
+				assertTrue(validSignature);
+			}
 
 		}
 

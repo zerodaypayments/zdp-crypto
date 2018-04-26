@@ -19,11 +19,15 @@ public class TestKeys extends TestCase {
 
 			assertNotNull(privateKey);
 
-			String pubKey = Keys.toZDPPublicKey(privateKey, curve);
-
+			String pubKey = Keys.toPublicKey(privateKey, curve);
 			assertNotNull(pubKey);
-
 			System.out.println(pubKey);
+			
+			String zdpPubKey = Keys.toZDPAccountUuid(privateKey, curve);
+			assertNotNull(zdpPubKey);
+			System.out.println(zdpPubKey);
+			
+			System.out.println();
 
 		}
 

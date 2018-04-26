@@ -26,9 +26,16 @@ import org.bouncycastle.math.ec.FixedPointCombMultiplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * Try not use directly, rather evolve io.zdp.crypto.key.ZDPKeyPair class.
+ * 
+ * @author sxn144
+ *
+ */
 public class Keys {
 
-	public static final String ZDP00 = "zdp00";
+	public static final String ZDP = "zdp";
 
 	private static final Logger log = LoggerFactory.getLogger(Keys.class);
 
@@ -164,16 +171,17 @@ public class Keys {
 		return Base58.encode(privKey.toByteArray());
 	}
 
-	public static String toZDPPublicKey(BigInteger privKey, String curve) {
+	public static String toPublicKey(BigInteger priv, String curve) {
+		return Base58.encode(Keys.getPublicKeyFromPrivate(priv, curve));
+	}
 
-		byte[] pubKey = Keys.getPublicKeyFromPrivate(privKey, curve);
+	public static String toZDPAccountUuid(BigInteger privKey, String curve) {
 
-		byte[] pub = Keys.hashPublicKey(pubKey);
+		byte[] pub = Keys.getPublicKeyFromPrivate(privKey, curve);
 
-		String key = Base58.encode(pub);
+		pub = hashPublicKey(pub);
 
-		return ZDP00 + key;
-
+		return Keys.ZDP + Curves.getCurveIndexAsReadable(curve) + Base58.encode(pub);
 	}
 
 	public static BigInteger toBigIntegerFromPrivateKeyBase58(String v) {

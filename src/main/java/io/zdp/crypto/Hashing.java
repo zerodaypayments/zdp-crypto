@@ -59,5 +59,6 @@ public class Hashing {
 		data = DigestUtils.sha256(data);
 		return data;
 	}
+	
 
 }
