@@ -14,11 +14,18 @@ public class TestZDPAccountUuid extends TestCase {
 
 				ZDPKeyPair kp = ZDPKeyPair.createRandom(curve);
 
-				//				System.out.println(kp.getZDPAccount());
+				String uuid = kp.getZDPAccount().getUuid();
 
-				//				System.out.println();
+				assertEquals(curve, kp.getZDPAccount().getCurve());
 
-				assertTrue(ZDPAccountUuid.isValidUuid(kp.getZDPAccount().getUuid()));
+				assertTrue(ZDPAccountUuid.isValidUuid(uuid));
+
+				ZDPAccountUuid zu = new ZDPAccountUuid(uuid);
+
+				assertEquals(curve, zu.getCurve());
+
+				assertTrue(uuid.contains(Base58.encode(zu.getPublicKeyHash())));
+				assertTrue(uuid.contains(Base58.encode(kp.getZDPAccount().getPublicKeyHash())));
 
 			}
 

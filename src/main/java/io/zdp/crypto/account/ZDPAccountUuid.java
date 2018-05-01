@@ -22,29 +22,63 @@ public class ZDPAccountUuid {
 
 	public static final String ZDP = "zdp";
 
-	private byte[] publicKey;
+	private byte[] publicKeyHash;
 
 	private String curve;
 
+	private int curveIndex;
+
 	public ZDPAccountUuid(byte[] publicKey, String curve) {
 
-		this.publicKey = publicKey;
-		this.curve = curve;
+		byte[] hash = Hashing.hashPublicKey(publicKey);
 
+		this.publicKeyHash = hash;
+		this.curve = curve;
+		this.curveIndex = Curves.getCurveIndex(curve);
+
+	}
+
+	public ZDPAccountUuid(String uuid) {
+
+		try {
+			this.publicKeyHash = Base58.decode(uuid.substring(6, uuid.length() - 2));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		String curv = uuid.substring(3, 6);
+		curv = StringUtils.replace(curv, ZERO_REPLACEMENT_FOR_BASE58, ZERO);
+		while (curv.startsWith(ZERO)) {
+			curv = StringUtils.removeStart(curv, ZERO);
+		}
+
+		curveIndex = Integer.parseInt(curv);
+		this.curve = Curves.getCurveName(curveIndex);
+
+	}
+
+	public byte[] getPublicKeyHash() {
+		return publicKeyHash;
+	}
+
+	public String getCurve() {
+		return curve;
+	}
+
+	public int getCurveAsIndex() {
+		return 0;
 	}
 
 	public String getUuid() {
 
-		byte[] hash = Hashing.hashPublicKey(publicKey);
-
 		CRC8 crc8 = new CRC8();
-		crc8.update(hash);
+		crc8.update(publicKeyHash);
 
 		String checksum = Long.toHexString(crc8.getValue());
 		checksum = StringUtils.leftPad(checksum, 2, ZERO_REPLACEMENT_FOR_BASE58);
 		checksum = StringUtils.replace(checksum, ZERO, ZERO_REPLACEMENT_FOR_BASE58);
 
-		return ZDP + Curves.getCurveIndexAsReadable(curve) + Base58.encode(hash) + checksum;
+		return ZDP + Curves.getCurveIndexAsReadable(curve) + Base58.encode(publicKeyHash) + checksum;
 
 	}
 
@@ -104,11 +138,11 @@ public class ZDPAccountUuid {
 		crc8.update(hash);
 
 		String crc = Long.toHexString(crc8.getValue());
-		
+
 		while (crc.startsWith(ZERO)) {
 			crc = StringUtils.removeStart(crc, ZERO);
 		}
-		
+
 		if (false == crc.equals(checksum)) {
 			return false;
 		}
@@ -176,4 +210,5 @@ public class ZDPAccountUuid {
 			return Crypto.getZDPPublicAccountUuid(pub, Curves.getCurveIndex(curve));
 		}	
 	*/
+
 }
