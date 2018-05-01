@@ -20,6 +20,7 @@ public class Curves {
 	private static final Logger log = LoggerFactory.getLogger(Curves.class);
 
 	public static final String DEFAULT_CURVE = "secp256r1";
+	public static final int DEFAULT_CURVE_INDEX = 45;
 
 	private static final Map<Integer, String> curves = new HashMap<>();
 
@@ -64,7 +65,7 @@ public class Curves {
 
 	public static String getCurveIndexAsReadable(String curve) {
 		int index = getCurveIndex(curve);
-		return StringUtils.leftPad(Integer.toString(index), 3, "0");
+		return StringUtils.leftPad(Integer.toString(index), 3, "x");
 	}
 
 	public static int getCurveIndex(String curve) {

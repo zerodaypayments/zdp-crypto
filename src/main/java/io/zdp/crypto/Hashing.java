@@ -57,8 +57,20 @@ public class Hashing {
 		byte[] data = StringUtils.getBytesUtf8(signature);
 		data = whirlpool(data);
 		data = DigestUtils.sha256(data);
+		data = ripemd160(data);
 		return data;
 	}
-	
+
+	public static byte[] hashPublicKey(byte[] pub) {
+
+		pub = whirlpool(pub);
+
+		pub = DigestUtils.sha256(pub);
+
+		pub = ripemd160(pub);
+
+		return pub;
+
+	}
 
 }

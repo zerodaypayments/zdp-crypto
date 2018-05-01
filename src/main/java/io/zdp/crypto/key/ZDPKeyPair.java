@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import io.zdp.crypto.Base58;
 import io.zdp.crypto.Keys;
 import io.zdp.crypto.Signing;
+import io.zdp.crypto.account.ZDPAccountUuid;
 
 @SuppressWarnings("serial")
 public class ZDPKeyPair implements Serializable {
@@ -92,8 +93,11 @@ public class ZDPKeyPair implements Serializable {
 		return Base58.encode(getPublicKeyAsBytes());
 	}
 
-	public String getAccountUuid() {
-		return Keys.toZDPAccountUuid(bi, curve);
+	public ZDPAccountUuid getZDPAccount() {
+
+		byte[] pub = Keys.getPublicKeyFromPrivate(bi, curve);
+
+		return new ZDPAccountUuid(pub, curve);
 	}
 
 	public byte[] sign(byte[] data) throws Exception {

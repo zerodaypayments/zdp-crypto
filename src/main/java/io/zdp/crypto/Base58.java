@@ -19,6 +19,8 @@ package io.zdp.crypto;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Base58 is a way to encode Bitcoin addresses (or arbitrary data) as alphanumeric strings.
  * <p>
@@ -44,14 +46,27 @@ import java.util.Arrays;
  * numbers), and finally represent the resulting base-58 digits as alphanumeric ASCII characters.
  */
 public class Base58 {
+
 	public static final char[] ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".toCharArray();
+
 	private static final char ENCODED_ZERO = ALPHABET[0];
+
 	private static final int[] INDEXES = new int[128];
+
 	static {
 		Arrays.fill(INDEXES, -1);
 		for (int i = 0; i < ALPHABET.length; i++) {
 			INDEXES[ALPHABET[i]] = i;
 		}
+	}
+
+	public static boolean isBase58(String v) {
+		try {
+			Base58.decode(v);
+		} catch (Exception e) {
+			return false;
+		}
+		return true;
 	}
 
 	/**

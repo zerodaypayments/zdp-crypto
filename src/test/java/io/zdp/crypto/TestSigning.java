@@ -35,7 +35,7 @@ public class TestSigning extends TestCase {
 
 				PublicKey pubKey = Keys.toPublicKey(pubKeyBytes, curve);
 
-				boolean validSignature = Signing.isValidSignature(pubKey, text, sign);
+				boolean validSignature = Signing.isValidSignature(pubKey, text.getBytes(), sign);
 
 				assertTrue(validSignature);
 			}
@@ -58,7 +58,7 @@ public class TestSigning extends TestCase {
 
 			PublicKey pubKey = Keys.toPublicKey(pubKeyBytes, curve);
 
-			boolean validSignature = Signing.isValidSignature(pubKey, "1", sign);
+			boolean validSignature = Signing.isValidSignature(pubKey, "1".getBytes(), sign);
 
 			assertFalse(validSignature);
 

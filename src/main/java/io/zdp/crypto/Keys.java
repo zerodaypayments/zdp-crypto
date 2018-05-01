@@ -35,8 +35,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Keys {
 
-	public static final String ZDP = "zdp";
-
 	private static final Logger log = LoggerFactory.getLogger(Keys.class);
 
 	private static final String EC = "EC";
@@ -92,16 +90,6 @@ public class Keys {
 			privKey = privKey.mod(ecSpec.getN());
 		}
 		return new FixedPointCombMultiplier().multiply(ecSpec.getG(), privKey);
-	}
-
-	public static byte[] hashPublicKey(byte[] pub) {
-
-		pub = Hashing.whirlpool(pub);
-
-		pub = Hashing.ripemd160(pub);
-
-		return pub;
-
 	}
 
 	public static PrivateKey getPrivateKeyFromECBigIntAndCurve(BigInteger s, String curveName) {
@@ -173,15 +161,6 @@ public class Keys {
 
 	public static String toPublicKey(BigInteger priv, String curve) {
 		return Base58.encode(Keys.getPublicKeyFromPrivate(priv, curve));
-	}
-
-	public static String toZDPAccountUuid(BigInteger privKey, String curve) {
-
-		byte[] pub = Keys.getPublicKeyFromPrivate(privKey, curve);
-
-		pub = hashPublicKey(pub);
-
-		return Keys.ZDP + Curves.getCurveIndexAsReadable(curve) + Base58.encode(pub);
 	}
 
 	public static BigInteger toBigIntegerFromPrivateKeyBase58(String v) {

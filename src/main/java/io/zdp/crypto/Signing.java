@@ -41,7 +41,7 @@ public class Signing {
 	/**
 	 * Check is a Digital signature is valid by using provided RS public key
 	 */
-	public static boolean isValidSignature(PublicKey pub, String data, byte[] signature) throws Exception {
+	public static boolean isValidSignature(PublicKey pub, byte[] dataToVerify, byte[] signature) throws Exception {
 
 		try {
 
@@ -49,7 +49,7 @@ public class Signing {
 
 			sign.initVerify(pub);
 
-			sign.update(data.getBytes(StandardCharsets.UTF_8));
+			sign.update(dataToVerify);
 
 			return sign.verify(signature);
 
