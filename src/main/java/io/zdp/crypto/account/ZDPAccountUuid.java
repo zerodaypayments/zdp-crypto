@@ -61,6 +61,10 @@ public class ZDPAccountUuid {
 		return publicKeyHash;
 	}
 
+	public String getPublicKeyHashAsBase58() {
+		return Base58.encode(publicKeyHash);
+	}
+
 	public String getCurve() {
 		return curve;
 	}
