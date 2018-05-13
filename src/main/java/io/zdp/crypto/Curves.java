@@ -21,6 +21,8 @@ public class Curves {
 
 	public static final String DEFAULT_CURVE = "secp256r1";
 	public static final int DEFAULT_CURVE_INDEX = 45;
+	
+	public static final String VALIDATION_NODE_CURVE = "secp256r1";
 
 	private static final Map<Integer, String> curves = new HashMap<>();
 
