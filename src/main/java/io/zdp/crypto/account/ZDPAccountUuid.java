@@ -11,8 +11,6 @@ import io.zdp.crypto.crc.CRC8;
 /**
  * Utilities related to public account uuid
  * 
- * @author sxn144
- *
  */
 public class ZDPAccountUuid {
 

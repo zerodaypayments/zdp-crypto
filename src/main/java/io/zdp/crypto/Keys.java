@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
  * 
  * Try not use directly, rather evolve io.zdp.crypto.key.ZDPKeyPair class.
  * 
- * @author sxn144
  *
  */
 public class Keys {
