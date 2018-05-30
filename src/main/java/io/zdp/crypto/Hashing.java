@@ -13,61 +13,61 @@ import org.slf4j.LoggerFactory;
 
 public class Hashing {
 
-	private static final Logger log = LoggerFactory.getLogger(Hashing.class);
+	private static final Logger log = LoggerFactory.getLogger( Hashing.class );
 
 	private static final String WHIRLPOOL = "Whirlpool";
 
 	private static final String RIPEMD160 = "RIPEMD160";
 
 	static {
-		Security.addProvider(new BouncyCastleProvider());
+		Security.addProvider( new BouncyCastleProvider() );
 	}
 
-	public static byte[] whirlpool(byte[] data) {
-		return hash(data, WHIRLPOOL);
+	public static byte [ ] whirlpool ( byte [ ] data ) {
+		return hash( data, WHIRLPOOL );
 	}
 
-	public static byte[] ripemd160(byte[] data) {
-		return hash(data, RIPEMD160);
+	public static byte [ ] ripemd160 ( byte [ ] data ) {
+		return hash( data, RIPEMD160 );
 	}
 
-	public static byte[] whirlpool(String data) {
-		return hash(StringUtils.getBytesUtf8(data), WHIRLPOOL);
+	public static byte [ ] whirlpool ( String data ) {
+		return hash( StringUtils.getBytesUtf8( data ), WHIRLPOOL );
 	}
 
-	public static byte[] ripemd160(String data) {
-		return hash(StringUtils.getBytesUtf8(data), RIPEMD160);
+	public static byte [ ] ripemd160 ( String data ) {
+		return hash( StringUtils.getBytesUtf8( data ), RIPEMD160 );
 	}
 
-	private static byte[] hash(byte[] v, String hashingAlgoName) {
+	private static byte [ ] hash ( byte [ ] v, String hashingAlgoName ) {
 
 		try {
-			final MessageDigest messageDigest = MessageDigest.getInstance(hashingAlgoName, BouncyCastleProvider.PROVIDER_NAME);
-			final byte[] hash = messageDigest.digest(v);
+			final MessageDigest messageDigest = MessageDigest.getInstance( hashingAlgoName, BouncyCastleProvider.PROVIDER_NAME );
+			final byte [ ] hash = messageDigest.digest( v );
 			return hash;
-		} catch (NoSuchAlgorithmException e) {
-			log.error("Error: ", e);
-		} catch (NoSuchProviderException e) {
-			log.error("Error: ", e);
+		} catch ( NoSuchAlgorithmException e ) {
+			log.error( "Error: ", e );
+		} catch ( NoSuchProviderException e ) {
+			log.error( "Error: ", e );
 		}
 		return null;
 	}
 
-	public static byte[] hashTransactionSignature(String signature) {
-		byte[] data = StringUtils.getBytesUtf8(signature);
-		data = whirlpool(data);
-		data = DigestUtils.sha256(data);
-		data = ripemd160(data);
+	public static byte [ ] hashTransactionSignature ( String signature ) {
+		byte [ ] data = StringUtils.getBytesUtf8( signature );
+		data = whirlpool( data );
+		data = DigestUtils.sha256( data );
+		data = ripemd160( data );
 		return data;
 	}
 
-	public static byte[] hashPublicKey(byte[] pub) {
+	public static byte [ ] hashPublicKey ( byte [ ] pub ) {
 
-		pub = whirlpool(pub);
+		pub = DigestUtils.sha256( pub );
 
-		pub = DigestUtils.sha256(pub);
+		pub = DigestUtils.sha256( pub );
 
-		pub = ripemd160(pub);
+		pub = ripemd160( pub );
 
 		return pub;
 
