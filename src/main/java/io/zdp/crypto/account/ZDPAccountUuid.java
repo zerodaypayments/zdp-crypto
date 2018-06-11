@@ -1,5 +1,9 @@
 package io.zdp.crypto.account;
 
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -53,6 +57,12 @@ public class ZDPAccountUuid {
 		curveIndex = Integer.parseInt(curv);
 		this.curve = Curves.getCurveName(curveIndex);
 
+	}
+
+	public byte[] toHashData() {
+		byte[] data = ArrayUtils.addAll(publicKeyHash, curve.getBytes(StandardCharsets.UTF_8));
+		data = ArrayUtils.addAll(data, ByteBuffer.allocate(4).putInt(curveIndex).array());
+		return Hashing.ripemd160(data);
 	}
 
 	public byte[] getPublicKeyHash() {

@@ -55,7 +55,6 @@ public class Hashing {
 
 	public static byte [ ] hashTransactionSignature ( String signature ) {
 		byte [ ] data = StringUtils.getBytesUtf8( signature );
-		data = whirlpool( data );
 		data = DigestUtils.sha256( data );
 		data = ripemd160( data );
 		return data;
