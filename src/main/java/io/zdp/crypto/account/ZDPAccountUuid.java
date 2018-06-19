@@ -96,7 +96,7 @@ public class ZDPAccountUuid {
 
 	@Override
 	public String toString() {
-		return "ZDPAccountUuid [getUuid()=" + getUuid() + "]";
+		return "ZDPAccountUuid [" + getUuid() + "]";
 	}
 
 	public static boolean isValidUuid(String publicAccountUuid) {
